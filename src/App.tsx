@@ -5,6 +5,7 @@ import Form from "./components/Form/Form.tsx";
 import axios from "axios";
 
 
+
 const App = () => {
     const url = 'http://146.185.154.90:8000/messages'
     const [posts, setPosts] = useState<IPosts[]>([])
@@ -12,12 +13,17 @@ const App = () => {
 
 
     const fetch = useCallback(async (datatime: string | null) => {
-        const response: { data: IPosts[] } = await axios.get(url)
-        let urlDate = datatime !==null ? url +'?datetime' : url;
-        if (response) {
-            const posts = response.data
+        const urlDate = datatime !== null ? `${url}?datetime=${datatime}` : url;
+        const response: { data: IPosts[] } = await axios.get(urlDate)
+
+        const posts = response.data
+        if (response.data.length > 0 && datatime === null) {
+
             setLastPost(response.data[response.data.length - 1].datetime)
             setPosts(posts.slice(-15).reverse())
+        } else if (response.data.length > 0 && datatime !== null) {
+            setLastPost(response.data[response.data.length - 1].datetime)
+            setPosts(prev => [...posts.slice(-15), ...prev])
         }
     }, []);
 
@@ -26,8 +32,7 @@ const App = () => {
             void fetch(lastPost);
         }, 3000)
         return () => clearInterval(interval)
-    }, [fetch,lastPost]);
-
+    }, [fetch, lastPost]);
 
 
     const messageToSend = async (message: IMessageToSend) => {
