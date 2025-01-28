@@ -4,24 +4,22 @@
     padding: 16px;
     text-align: center;
     border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
     margin: 10px;
     box-sizing: border-box;
 
 }
-
-
 
 .PostCard:hover,
 .PostCard:active {
     background-color: #eee;
 }
 
-
-
 .Author {
     margin: 16px 0;
     color: #ccc;
 }
 
+.Shadow{
+    box-shadow: -1px -4px 23px 0 rgba(0,0,0,0.47);
+}
 

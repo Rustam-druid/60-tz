@@ -6,10 +6,10 @@ interface IProps {
 }
 const Blog:React.FC<IProps> = ({posts}) => {
     return (
-        <>
+        <div className="row p-0 justify-content-lg-end">
             {posts.map((post) => (
-                <div key={post._id} className='col-6 mt-3 d-flex justify-content-center align-items-center'>
-                    <div className=' PostCard p-3  '>
+                <div key={post._id} className='col-3 p-0 mt-3 d-flex justify-content-center align-items-center'>
+                    <div className=' PostCard p-3 Shadow '>
                         <h4>{new Date(post.datetime).toLocaleDateString('ru-RU', {
                             year: 'numeric',
                             month: '2-digit',
@@ -24,7 +24,7 @@ const Blog:React.FC<IProps> = ({posts}) => {
                 </div>
 
             ))}
-        </>
+        </div>
     );
 };
 

@@ -47,10 +47,15 @@ const App = () => {
 
     return (
         <>
-            <div className='container border border-black border-3'>
-                <div className='row justify-content-center align-items-center'>
+            <div className='container border border-black border-5'>
+                <div >
                     <Form message={messageToSend}/>
-                   <Blog posts={posts}/>
+                         <div className='p-5'>
+                             <Blog posts={posts}/>
+                         </div>
+
+
+
                 </div>
 
             </div>

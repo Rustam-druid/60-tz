@@ -19,7 +19,7 @@ const Form: React.FC<Props> = ({message}) => {
         })
     }
 
-    const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm(prevState => {
             return {
                 ...prevState,
@@ -29,29 +29,32 @@ const Form: React.FC<Props> = ({message}) => {
     }
 
     return (
-        <div>
+        <div className="border border-black border-3 w-50 me-4 mt-3 p-3">
             <form onSubmit={onSubmit}>
-                <div>
-                    <label htmlFor="author">author</label>
-                    <input
-                        className='form-control'
-                        name="author"
-                        id="author"
-                        onChange={changeInput}
-                        value={form.author}
-                        type="text"/>
+                <div className="row">
+                    <div className="col-3 w-100 ">
+                        <label htmlFor="author">author</label>
+                        <input
+                            className='w-25 form-control border border-2 border-black'
+                            name="author"
+                            id="author"
+                            onChange={changeInput}
+                            value={form.author}
+                            type="text"/>
+                    </div>
+                    <div className='col-5'>
+                        <label htmlFor="author">message</label>
+                        <textarea
+                            className='form-control border border-2 border-black'
+                            name="message"
+                            id="message"
+                            onChange={changeInput}
+                            value={form.message}
+                        />
+                    </div>
+
                 </div>
-                <div>
-                    <label htmlFor="author">message</label>
-                    <input
-                        className='form-control'
-                        name="message"
-                        id="message"
-                        onChange={changeInput}
-                        value={form.message}
-                        type="text"/>
-                </div>
-                <button className='btn btn-primary'>Add</button>
+                <button className='w-25 mt-4 btn btn-primary'>Add</button>
             </form>
         </div>
     );
