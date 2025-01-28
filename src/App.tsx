@@ -3,6 +3,7 @@ import {IMessageToSend, IPosts} from "./types";
 import './App.css'
 import Form from "./components/Form/Form.tsx";
 import axios from "axios";
+import Blog from "./components/Blog/Blog.tsx";
 
 
 
@@ -49,19 +50,7 @@ const App = () => {
             <div className='container border border-black border-3'>
                 <div className='row justify-content-center align-items-center'>
                     <Form message={messageToSend}/>
-                    {posts.map((post) => (
-                        <div key={post._id} className='col-6 mt-3 d-flex justify-content-center align-items-center'>
-                            <div className=' PostCard p-3  '>
-                                <h4>{post.datetime}</h4>
-                                <h4>{post.message}</h4>
-                                <h4 className='card-title Author'>{post.author}</h4>
-
-                            </div>
-
-
-                        </div>
-
-                    ))}
+                   <Blog posts={posts}/>
                 </div>
 
             </div>
