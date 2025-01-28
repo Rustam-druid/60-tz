@@ -17,7 +17,6 @@ const Form: React.FC<Props> = ({message}) => {
             author: '',
             message: '',
         })
-        console.log( 'вот' ,message)
     }
 
     const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

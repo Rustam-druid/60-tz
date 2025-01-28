@@ -1,41 +1,41 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {IMessageToSend, IPosts} from "./types";
 import './App.css'
 import Form from "./components/Form/Form.tsx";
-import {preview} from "vite";
+import axios from "axios";
+
 
 const App = () => {
     const url = 'http://146.185.154.90:8000/messages'
     const [posts, setPosts] = useState<IPosts[]>([])
     const [lastPost, setLastPost] = useState<null | string>(null)
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(url)
-            if (response.ok) {
-                const posts = await response.json()
 
-                setPosts(posts.slice(-15).reverse())
-            }
-            ;
 
+    const fetch = useCallback(async (datatime: string | null) => {
+        const response: { data: IPosts[] } = await axios.get(url)
+        let urlDate = datatime !==null ? url +'?datetime' : url;
+        if (response) {
+            const posts = response.data
+            setLastPost(response.data[response.data.length - 1].datetime)
+            setPosts(posts.slice(-15).reverse())
         }
-
-
-        void fetchData();
-
-        return
     }, []);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            void fetch(lastPost);
+        }, 3000)
+        return () => clearInterval(interval)
+    }, [fetch,lastPost]);
+
+
+
     const messageToSend = async (message: IMessageToSend) => {
-        const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify({message}),
-        })
-        if (response.ok) {
-            const newPost = await response.json()
-            setPosts( (preview => [...preview, newPost]))
+        try {
+            await axios.post(url, new URLSearchParams({...message}))
+        } catch (e) {
+            console.log(e)
         }
-        console.log(message)
     }
 
 
@@ -47,6 +47,7 @@ const App = () => {
                     {posts.map((post) => (
                         <div key={post._id} className='col-6 mt-3 d-flex justify-content-center align-items-center'>
                             <div className=' PostCard p-3  '>
+                                <h4>{post.datetime}</h4>
                                 <h4>{post.message}</h4>
                                 <h4 className='card-title Author'>{post.author}</h4>
 
